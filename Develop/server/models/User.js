@@ -22,7 +22,12 @@ const userSchema = new Schema(
       required: true,
     },
     // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    savedBooks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Book'
+      }
+    ],
   },
   // set this to use virtual below
   {
@@ -51,6 +56,11 @@ userSchema.methods.isCorrectPassword = async function (password) {
 userSchema.virtual('bookCount').get(function () {
   return this.savedBooks.length;
 });
+
+// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
+// userSchema.virtual('savedBooks').get(function () {
+//   return this.savedBooks;
+// });
 
 const User = model('User', userSchema);
 

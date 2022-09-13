@@ -1,3 +1,7 @@
+const { model } = require('mongoose');
+const bookSchema = require('./Book');
 const User = require('./User');
 
-module.exports = { User };
+const Book = model('Book', bookSchema);
+
+module.exports = { User, Book };
